@@ -11,11 +11,14 @@ class Board extends Component {
 			deck: [],
 			hand: [],
 			turn: 0,
-			pointer: 0
+			pointer: 0,
+			chips: 200
 		};
 	}
 
+
 	//////// CARD METHODS ////////
+
 	buildDeck () {
 		const tempDeck = [];
 		let count = 0;
@@ -25,7 +28,8 @@ class Board extends Component {
 				tempDeck.push({
 					index: count,
 					suit: this.state.suits[x],
-					rank: this.state.ranks[y]
+					rank: this.state.ranks[y],
+					hold: false
 				});
 				count =+ count;
 			}
@@ -51,16 +55,64 @@ class Board extends Component {
 	fillHand () {
 		const tempHand = [];
 		let tempPointer = this.state.pointer;
+
 		for (let x = 0; x < 5; x++) {
 			tempHand.push(this.state.deck[tempPointer]);
-			tempPointer = tempPointer + 1;
+			tempPointer += 1;
 		}
+
 		this.setState({hand: tempHand});
 		this.setState({pointer: tempPointer});
 	}
 
 	updateHand () {
+		let tempHand = this.state.hand;
+		let tempPointer = this.state.pointer;
+		console.log(tempHand[0]);
 
+		for (let x = 0; x < tempHand.length; x++) {
+			if (!tempHand[x].hold) {
+				//console.log(this.state.deck[tempPointer]);
+				tempHand[x] = this.state.deck[tempPointer];
+				tempPointer += 1;
+			}
+		}
+		console.log(tempHand[0]);
+
+		this.setState({hand: tempHand});
+		this.setState({pointer: tempPointer});
+	}
+
+	clearHand () {
+		this.setState({hand: []});
+	}
+
+
+	//////// GAME SPECIFIC METHODS ////////
+
+	resetBoard () {
+		this.shuffleDeck();
+		this.clearHand();
+		this.setState({
+			pointer: 0,
+			turn: 0
+		});
+	}
+
+
+	//////// HANDLER METHODS ////////
+
+	newGameHandler() {
+		this.resetBoard();
+		this.fillHand();
+	}
+
+	dealHandler() {
+		this.updateHand();
+	}
+
+	toggleHoldHandler(x) {
+		console.log(x);
 	}
 
 
@@ -72,23 +124,25 @@ class Board extends Component {
 
 
 	render() {
-		const deck = [];
-		for (let x = 0; x < this.state.deck.length; x++) {
-			deck.push(
+		const hand = [];
+		for (let x = 0; x < this.state.hand.length; x++) {
+			hand.push(
 				<Card
 					key={x}
 					index={this.state.deck[x].index}
 					suit={this.state.deck[x].suit}
 					rank={this.state.deck[x].rank}
+					hold={this.state.deck[x].hold}
+					toggleHold={this.toggleHoldHandler.bind(this, x)}
 				/>
 			);
 		}
 		return (
 			<div id="board">
-				<button>New Game</button>
-				<button>Deal</button>
+				<button onClick={this.newGameHandler.bind(this)}>New Game</button>
+				<button onClick={this.dealHandler.bind(this)}>Deal</button>
 				<div>
-					{deck}
+					{hand}
 				</div>
 			</div>
 		);
