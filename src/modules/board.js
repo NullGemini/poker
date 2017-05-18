@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from './card';
+import TopUI from './topui';
 
 class Board extends Component {
 	constructor(props) {
@@ -10,9 +11,9 @@ class Board extends Component {
 			ranks: ["2", "3", "4", "5", "6", "7", "8", "9", "10", "j", "q", "k", "a"],
 			deck: [],
 			hand: [],
-			deal: true,
+			deal: false,
 			pointer: 0,
-			chips: 500,
+			chips: 0,
 			result: null,
 			winnings: null
 		};
@@ -98,17 +99,6 @@ class Board extends Component {
 
 	//////// GAME METHODS ////////
 
-	resetBoard () {
-		this.resetHold();
-		this.shuffleDeck();
-		this.clearHand();
-		this.setState({
-			deal: true,
-			result: null,
-			winnings: null
-		});
-	}
-
 	resetHold(){
 		const tempDeck = this.state.deck;
 
@@ -118,6 +108,18 @@ class Board extends Component {
 
 		this.setState({
 			deck: tempDeck
+		});
+	}
+
+	resetBoard () {
+		const newDeal = true
+		this.resetHold();
+		this.shuffleDeck();
+		this.clearHand();
+		this.setState({
+			deal: newDeal,
+			result: null,
+			winnings: null
 		});
 	}
 
@@ -260,7 +262,10 @@ class Board extends Component {
 			chips: chips,
 			winnings: winnings
 		})
+	}
 
+	updateLocalStorage() {
+		console.log(this.state.chips);
 	}
 
 
@@ -277,7 +282,8 @@ class Board extends Component {
 		}
 
 		this.setState({
-			chips: tempChips
+			chips: tempChips,
+			deal: true
 		});
 	}
 
@@ -286,7 +292,9 @@ class Board extends Component {
 
 		this.setState({
 			deal: false
-		})
+		});
+
+		this.resetHold();
 
 		this.endGame();
 	}
@@ -308,8 +316,21 @@ class Board extends Component {
 
 	componentWillMount() {
 		this.buildDeck();
+		if (this.state.chips === 0) {
+			if (localStorage.length > 0){
+				this.setState({chips: localStorage.getItem('chips')});
+			}
+		}
+		if (this.state.chips === 0) {
+			this.setState({chips: 100});
+		}
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.chips !== prevState.chips) {
+			this.updateLocalStorage();
+		}
+	}
 
 	render() {
 		const hand = [];
@@ -327,11 +348,12 @@ class Board extends Component {
 		}
 		return (
 			<div id="board">
-				<div>
-					<div>Chips: {this.state.chips} | Pointer: {this.state.pointer} | Deal: {this.state.deal?'true':'false'}</div>
-					<button onClick={this.newGameHandler.bind(this)}>New Game</button>
-					<button onClick={this.dealHandler.bind(this)}>Deal</button>
-				</div>
+				<TopUI 
+				chips={this.state.chips}
+				deal={this.state.deal}
+				dealHandler={this.dealHandler.bind(this)}
+				newGameHandler={this.newGameHandler.bind(this)}
+				/>
 				<div className="playingCards">
 					{hand}
 				</div>

@@ -22,7 +22,7 @@ class Card extends Component {
 		if (this.props.suit === "spades")
 			displaySuit = "♠";
 
-		let displayRank = this.props.rank.toUpperCase();
+		const displayRank = this.props.rank.toUpperCase();
 
 		return (
 			<div className={"card suit-" + this.props.rank + " " + this.props.suit} onClick={this.props.toggleHold}>
