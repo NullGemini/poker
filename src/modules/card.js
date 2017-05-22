@@ -24,13 +24,21 @@ class Card extends Component {
 
 		const displayRank = this.props.rank.toUpperCase();
 
-		return (
-			<div className={"card suit-" + this.props.rank + " " + this.props.suit} onClick={this.props.toggleHold}>
-				<span className="rank">{displayRank}</span>
-				<span className="suit">{displaySuit}</span>
-				<span className="hold">{this.props.hold?"HELD":" "}</span>
-			</div>
-		);
+		if (this.props.hold) {
+			return (
+				<div className={"card suit-" + this.props.rank + " " + this.props.suit + " hold"} onClick={this.props.toggleHold}>
+					<span className="rank">{displayRank}</span>
+					<span className="suit">{displaySuit}</span>
+				</div>
+			);
+		} else {
+			return (
+				<div className={"card suit-" + this.props.rank + " " + this.props.suit} onClick={this.props.toggleHold}>
+					<span className="rank">{displayRank}</span>
+					<span className="suit">{displaySuit}</span>
+				</div>
+			);
+		}
 	}
 }
 

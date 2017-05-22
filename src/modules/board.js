@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Card from './card';
 import TopUI from './topui';
+import BottomUI from './bottomui';
 
 class Board extends Component {
 	constructor(props) {
@@ -265,7 +266,7 @@ class Board extends Component {
 	}
 
 	updateLocalStorage() {
-		console.log(this.state.chips);
+		localStorage.setItem('chips', this.state.chips);
 	}
 
 
@@ -300,6 +301,8 @@ class Board extends Component {
 	}
 
 	toggleHoldHandler(x) {
+		if (!this.state.deal) return false;
+
 		const tempHand = this.state.hand;
 		if (tempHand[x].hold) {
 			tempHand[x].hold = false;
@@ -319,10 +322,9 @@ class Board extends Component {
 		if (this.state.chips === 0) {
 			if (localStorage.length > 0){
 				this.setState({chips: localStorage.getItem('chips')});
+			} else {
+				this.setState({chips: 100});
 			}
-		}
-		if (this.state.chips === 0) {
-			this.setState({chips: 100});
 		}
 	}
 
@@ -357,9 +359,10 @@ class Board extends Component {
 				<div className="playingCards">
 					{hand}
 				</div>
-				<div>
-					{this.state.result} | Won: {this.state.winnings}
-				</div>
+				<BottomUI
+				result={this.state.result}
+				winnings={this.state.winnings}
+				/>
 			</div>
 		);
 	}
