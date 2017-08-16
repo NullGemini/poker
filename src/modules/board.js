@@ -280,12 +280,21 @@ class Board extends Component {
 		if (tempChips >= 5) {
 			tempChips -= 5;
 			this.fillHand();
+
+			this.setState({
+				chips: tempChips,
+				deal: true
+			});
+		} else {
+			//alert("Replenishing Chips");
+			this.setState({
+				chips: 100,
+				result: "Replenish",
+				deal: false
+			});
 		}
 
-		this.setState({
-			chips: tempChips,
-			deal: true
-		});
+		
 	}
 
 	dealHandler() {

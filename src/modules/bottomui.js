@@ -16,6 +16,12 @@ class BottomUI extends Component {
 						<span>{this.props.result}</span>
 					</div>
 				);
+			} else if (this.props.result === "Replenish") {
+				return (
+					<div className="result replenish">
+						<span>Replenishing Chips.</span>
+					</div>
+				);
 			} else {
 				return (
 					<div className="result win">
