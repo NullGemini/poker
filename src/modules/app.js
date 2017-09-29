@@ -15,12 +15,16 @@ class App extends Component {
 	}
 
 	open(source) {
-		if (source === 'rules') {
-			this.setState({showRules: true});
-		} else if (source === 'about') {
-			this.setState({showAbout: true});
-		} else if (source === 'source') {
-			this.setState({showSource: true});
+		if (1 === 1) {
+			alert("Modals are temporarily inoperable.");
+		} else {
+			if (source === 'rules') {
+				this.setState({showRules: true});
+			} else if (source === 'about') {
+				this.setState({showAbout: true});
+			} else if (source === 'source') {
+				this.setState({showSource: true});
+			}
 		}
 	}
 
