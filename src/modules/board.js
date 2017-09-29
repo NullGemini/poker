@@ -16,8 +16,7 @@ class Board extends Component {
 			pointer: 0,
 			chips: 0,
 			result: null,
-			winnings: null,
-			hands: 0
+			winnings: null
 		};
 	}
 
