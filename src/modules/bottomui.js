@@ -22,6 +22,12 @@ class BottomUI extends Component {
 						<span>Replenishing Chips.</span>
 					</div>
 				);
+			} else if (this.props.result === "Reset") {
+				return (
+					<div className="result replenish">
+						<span>Game Reset.</span>
+					</div>
+				);
 			} else {
 				return (
 					<div className="result win">

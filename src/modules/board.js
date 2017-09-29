@@ -16,7 +16,8 @@ class Board extends Component {
 			pointer: 0,
 			chips: 0,
 			result: null,
-			winnings: null
+			winnings: null,
+			handsPlayed: 0
 		};
 	}
 
@@ -267,6 +268,7 @@ class Board extends Component {
 
 	updateLocalStorage() {
 		localStorage.setItem('chips', this.state.chips);
+		localStorage.setItem('handsPlayed', this.state.handsPlayed);
 	}
 
 
@@ -274,15 +276,19 @@ class Board extends Component {
 
 	newGameHandler() {
 		let tempChips = this.state.chips;
-		
+		let tempHandsPlayed = this.state.handsPlayed;
+
 		this.resetBoard();
 
 		if (tempChips >= 5) {
 			tempChips -= 5;
+			tempHandsPlayed += 1;
+
 			this.fillHand();
 
 			this.setState({
 				chips: tempChips,
+				handsPlayed: tempHandsPlayed,
 				deal: true
 			});
 		} else {
@@ -293,7 +299,19 @@ class Board extends Component {
 				deal: false
 			});
 		}
+	}
 
+	resetHandler() {
+		if (confirm('You are about to reset all game data.')) {
+			this.setState({
+				chips: 100,
+				handsPlayed: 0,
+				result: "Reset"
+			});
+			this.clearHand ();
+		} else {
+			// Do nothing!
+		}
 		
 	}
 
@@ -330,15 +348,20 @@ class Board extends Component {
 		this.buildDeck();
 		if (this.state.chips === 0) {
 			if (localStorage.length > 0){
-				this.setState({chips: localStorage.getItem('chips')});
+				let tempChips = parseInt(localStorage.getItem('chips'), 10);
+				let tempHandsPlayed = parseInt(localStorage.getItem('handsPlayed'), 10)
+				
+				this.setState({chips: tempChips});
+				this.setState({handsPlayed: tempHandsPlayed});
 			} else {
 				this.setState({chips: 100});
+				this.setState({handsPlayed: 0});
 			}
 		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (this.state.chips !== prevState.chips) {
+		if (this.state.chips !== prevState.chips || this.state.handsPlayed !== prevState.handsPlayed) {
 			this.updateLocalStorage();
 		}
 	}
@@ -361,9 +384,11 @@ class Board extends Component {
 			<div id="board">
 				<TopUI 
 				chips={this.state.chips}
+				handsPlayed={this.state.handsPlayed}
 				deal={this.state.deal}
 				dealHandler={this.dealHandler.bind(this)}
 				newGameHandler={this.newGameHandler.bind(this)}
+				resetHandler={this.resetHandler.bind(this)}
 				/>
 				<div className="playingCards">
 					{hand}

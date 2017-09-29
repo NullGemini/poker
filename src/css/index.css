@@ -96,6 +96,29 @@ body {
 	background-color:#880000;
 }
 
+.btn-secondary {
+	background-image: -webkit-linear-gradient(top,#DDDDDD 0,#333333 100%);
+	background-image: -o-linear-gradient(top,#DDDDDD 0,#333333 100%);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#DDDDDD),to(#333333));
+	background-image: linear-gradient(to bottom,#DDDDDD 0,#333333 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffDDDDDD', endColorstr='#ff333333', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	background-repeat: repeat-x;
+	border-color: #333333;
+	color: #FFFFFF;
+	min-width: 120px;
+	min-height: 34px;
+	border-radius: 5px;
+}
+
+.btn-secondary:focus, .btn-secondary:active:hover {
+	background-color:#333333;
+}
+
+.btn-secondary:hover {
+	background-color:#333333;
+}
+
 .input-group-addon:first-child {
 	min-width: 74px;
 	font-weight: bold;
@@ -120,8 +143,8 @@ body {
 	margin-left: auto;
 	min-width: 345px;
 	max-width: 470px;
-	min-height: 200px;
-	max-height: 200px;
+	min-height: 250px;
+	max-height: 250px;
 }
 
 .hold {
@@ -134,7 +157,7 @@ body {
 .result {
 	
 	font-weight: bold;
-	margin: 15px;
+	margin: 15px 15px 0 15px;
 	border-radius: 5px;
 	min-height: 34px;
 }
