@@ -15,16 +15,12 @@ class App extends Component {
 	}
 
 	open(source) {
-		if (1 === 1) {
-			alert("Modals are temporarily inoperable.");
-		} else {
-			if (source === 'rules') {
-				this.setState({showRules: true});
-			} else if (source === 'about') {
-				this.setState({showAbout: true});
-			} else if (source === 'source') {
-				this.setState({showSource: true});
-			}
+		if (source === 'rules') {
+			this.setState({showRules: true});
+		} else if (source === 'about') {
+			this.setState({showAbout: true});
+		} else if (source === 'source') {
+			this.setState({showSource: true});
 		}
 	}
 
@@ -101,7 +97,7 @@ class App extends Component {
 					</Modal.Header>
 					<Modal.Body>
 						<p>I'd love to hear feedback on tweaks, criticism, etc. The source code can be found on my github page.</p>
-						<p><a href="https://github.com/NullGemini/poker" target="_blank">https://github.com/NullGemini/poker</a></p>
+						<p><a href="https://github.com/NullGemini/poker" target="_blank" rel="noopener noreferrer">https://github.com/NullGemini/poker</a></p>
 					</Modal.Body>
 					<Modal.Footer>
 						<Button onClick={this.close.bind(this, 'source')}>Close</Button>

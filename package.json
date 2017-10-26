@@ -4,11 +4,11 @@
   "private": true,
   "dependencies": {
     "react": "^16.0.0",
-    "react-bootstrap": "^0.31.3",
-    "react-dom": "^15.0.0"
+    "react-bootstrap": "^0.31.5",
+    "react-dom": "^16.0.0"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5"
+    "react-scripts": "^1.0.14"
   },
   "homepage": "http://nullgemini.com/poker",
   "scripts": {

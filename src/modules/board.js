@@ -302,6 +302,7 @@ class Board extends Component {
 	}
 
 	resetHandler() {
+		//eslint-disable-next-line
 		if (confirm('You are about to reset all game data.')) {
 			this.setState({
 				chips: 100,
